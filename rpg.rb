@@ -67,7 +67,7 @@ end
 
 def baddie_death( hero, opponent )
   puts "Help build the community punk!"
-  hero["health"] = max_health
+  hero["health"] = 10
 end
 
 def hero_run( hero, opponent )
