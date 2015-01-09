@@ -12,7 +12,8 @@ baddies = [
   {name => "Nixon",health => 10},
   ]
 
-hero = { name => "Dried Blood Hero", health => 10 }
+max_health = 10
+hero = { name => "Dried Blood Hero", health => max_health }
 
 def hero_attack( opponent ) do
 
@@ -26,7 +27,12 @@ def hero_attack( opponent ) do
 
 	# Battle state report
 	puts hero[name] + ": " + hero[health] + " health points."
-	puts opponent[name] + ": " + opponent[health] + " health points."
+
+  if opponent[health] < 0 
+    baddie_death(opponent)
+  else
+  	puts opponent[name] + ": " + opponent[health] + " health points."
+  end
 
 end
 
@@ -58,3 +64,21 @@ end
 # main
 puts "Enter Your Name, Warrior: "
   hero[name] = gets.chomp
+puts "Welcome, " + hero[name] + ". Let the battle be joined!"
+
+while baddies.length > 0
+  n = rand(0..(baddies.length-1)) # Choose a baddie.
+  puts baddies[n][name] + " attacks! Do you want to run or fight? (y | n)"
+  isFighting = gets.chomp
+  if (isFighting === "n")
+    hero_run
+  else # isFighting === "y"
+    while ( hero[health] > 0 ) && ( baddies[n][health] > 0 ) 
+      hero_attack(baddies[n])
+      if ( hero[health] > 0 ) && ( baddies[n][health] > 0 )
+        baddie_attack(baddies[n])
+      end
+    end
+  end
+end
+
