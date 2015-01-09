@@ -1,6 +1,5 @@
 puts "Enter Your Name, Warrior:"
   name = gets.chomp
-  puts
 
 baddies = [
   {name => "Newt", health => 10},
