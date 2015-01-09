@@ -61,7 +61,8 @@ def baddie_attack( hero, opponent)
 end
 
 def bury(baddies, index)
-  baddies = baddies.delete_at(index)
+  killed = baddies.delete_at(index)
+  puts baddies
 end
 
 def hero_death
