@@ -12,8 +12,8 @@ baddies = [
   {"name" => "Nixon","health" => 10},
   ]
 
-max_health = 10
-hero = { "name" => "Dried Blood Hero", "health" => max_health }
+# max_health = 10
+hero = { "name" => "Dried Blood Hero", "health" => 10 }
 
 def hero_attack( hero, opponent )
 
@@ -25,7 +25,7 @@ def hero_attack( hero, opponent )
 	if chance > 0.2
 		hit = rand(2..4)
     opponent["health"] = opponent["health"] - hit
-    puts "You've landed it a hit! " + opponent["name"] + " loses " + hit.to_s + " points."
+    puts "You've landed a hit! " + opponent["name"] + " loses " + hit.to_s + " points."
 	else
     puts "Oh, no! You've missed!"
   end
@@ -33,7 +33,7 @@ def hero_attack( hero, opponent )
 	# Battle state report
 	puts hero["name"] + ": " + hero["health"].to_s + " health points."
 
-  if opponent["health"] < 0
+  if opponent["health"] <= 0
     baddie_death( hero, opponent )
   else
   	puts opponent["name"] + ": " + opponent["health"].to_s + " health points."
@@ -52,6 +52,7 @@ def baddie_attack( hero, opponent)
     puts opponent["name"] + ": " + opponent["health"].to_s + " health points."
     if hero["health"] <= 0
       hero_death
+      # break
     end
   else
     puts "The #{opponent["name"]} tried to attack you but misses!"
@@ -72,7 +73,7 @@ end
 
 def baddie_death( hero, opponent )
   puts "Help build the community punk!"
-  hero["health"] = max_health
+  hero["health"] = 10
 end
 
 def hero_run( hero, opponent )
@@ -85,18 +86,28 @@ puts "Enter Your Name, Warrior: "
   hero["name"] = gets.chomp
 puts "Welcome, " + hero["name"] + ". Let the battle be joined!"
 
-while baddies.length > 0
+while (baddies.length > 0) && (hero["health"] > 0)
   n = rand(0..(baddies.length-1)) # Choose a baddie.
-  puts baddies[n]["name"] + " attacks! Do you want to run or fight? (y | n)"
+  puts
+  puts baddies[n]["name"] + " attacks! Do you want to fight? (y | n)"
   isFighting = gets.chomp
   if (isFighting === "n")
     hero_run( hero, baddies[n] )
   else # isFighting === "y"
     while ( hero["health"] > 0 ) && ( baddies[n]["health"] > 0 )
       hero_attack( hero, baddies[n])
+      sleep(1)
       if ( hero["health"] > 0 ) && ( baddies[n]["health"] > 0 )
         baddie_attack( hero, baddies[n])
+        sleep(0.5)
+        puts ". . . "
+        sleep(0.5)
+        puts
       end
     end
   end
+end
+
+if baddies.length == 0
+  "Glorious!!! You defeated all the baddies!"
 end
