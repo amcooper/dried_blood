@@ -22,8 +22,11 @@ def hero_attack( opponent ) do
 
 	# 20% chance of missing. If chance is between 20% and 100%, it's a hit; weaken the opponent.
 	if chance > 0.2
-		opponent[health] = opponent[health] - rand(2..4)
-	end
+		hit = rand(2..4)
+    opponent[health] = opponent[health] - hit
+    puts "You've landed it a hit! " + opponent[name] + " loses " + hit + " points."
+	else
+    puts "Oh, no! You've missed!"
 
 	# Battle state report
 	puts hero[name] + ": " + hero[health] + " health points."
@@ -60,23 +63,25 @@ def hero_death do
   break
 end
 
-def hero_attack(baddies) do
-  chance = rand
-  if chance > .4
-    points = rand(1..3)
-    puts "The #{hero[name]} attack you for #{hero[name]} points."
-    baddies[health] = baddies[health] - points
-    puts baddies[name] + ": " + baddies[health] + " health points."
-    puts opponent[name] + " : " + hero[health] + " health points."
-    if baddies[health] <= 0
-      hero_death
-    end
-  else
-    puts "The #{hero[name]} tried to attack you but misses!"
-    puts hero[name] + ": " + baddies[health] + "health points."
-    puts hero[name] + ": " + hero[health] + " health points."
-  end
-end
+# Duplicate code
+#
+# def hero_attack(baddies) do
+#   chance = rand
+#   if chance > .4
+#     points = rand(1..3)
+#     puts "The #{hero[name]} attack you for #{hero[name]} points."
+#     baddies[health] = baddies[health] - points
+#     puts baddies[name] + ": " + baddies[health] + " health points."
+#     puts opponent[name] + " : " + hero[health] + " health points."
+#     if baddies[health] <= 0
+#       hero_death
+#     end
+#   else
+#     puts "The #{hero[name]} tried to attack you but misses!"
+#     puts hero[name] + ": " + baddies[health] + "health points."
+#     puts hero[name] + ": " + hero[health] + " health points."
+#   end
+# end
 
 def baddie_death do
   puts "Help build the community punk!"
@@ -107,4 +112,3 @@ while baddies.length > 0
     end
   end
 end
-
