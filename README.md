@@ -13,7 +13,7 @@ How Attacks Impact Health:
   3. Baddie Attack: after the Hero Attack, the baddie will launch a counter attack. If the baddie's attack misses, nothing will happen. If the attack lands, then you will lose 1-3 hps. Waaaa!
   
 
-There is no rest for the weary in this game. After each attack, you will be faced with another one. 
+There is no rest for the weary in this game. After each attack, you will be faced with another one.
 
 Good luck!
   
