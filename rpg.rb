@@ -33,7 +33,7 @@ def hero_attack( hero, opponent )
 	# Battle state report
 	puts hero["name"] + ": " + hero["health"].to_s + " health points."
 
-  if opponent["health"] < 0 
+  if opponent["health"] < 0
     baddie_death( hero, opponent )
   else
   	puts opponent["name"] + ": " + opponent["health"].to_s + " health points."
@@ -58,6 +58,10 @@ def baddie_attack( hero, opponent)
     puts hero["name"] + ": " + hero["health"].to_s + " health points."
     puts opponent["name"] + ": " + opponent["health"].to_s + " health points."
   end
+end
+
+def bury(baddies, index)
+  baddies = baddies.delete_at(index)
 end
 
 def hero_death
@@ -87,7 +91,7 @@ while baddies.length > 0
   if (isFighting === "n")
     hero_run( hero, baddies[n] )
   else # isFighting === "y"
-    while ( hero["health"] > 0 ) && ( baddies[n]["health"] > 0 ) 
+    while ( hero["health"] > 0 ) && ( baddies[n]["health"] > 0 )
       hero_attack( hero, baddies[n])
       if ( hero["health"] > 0 ) && ( baddies[n]["health"] > 0 )
         baddie_attack( hero, baddies[n])
