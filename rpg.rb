@@ -55,10 +55,36 @@ def baddie_attack(opponent) do
   end
 end
 
-
 def hero_death do
   puts "Sorry the blood has run dry. Better luck next time!"
   break
+end
+
+def hero_attack(baddies) do
+  chance = rand
+  if chance > .4
+    points = rand(1..3)
+    puts "The #{hero[name]} attack you for #{hero[name]} points."
+    baddies[health] = baddies[health] - points
+    puts baddies[name] + ": " + baddies[health] + " health points."
+    puts opponent[name] + " : " + hero[health] + " health points."
+    if baddies[health] <= 0
+      hero_death
+    end
+  else
+    puts "The #{hero[name]} tried to attack you but misses!"
+    puts hero[name] + ": " + baddies[health] + "health points."
+    puts hero[name] + ": " + hero[health] + " health points."
+  end
+end
+
+def baddie_death do
+  puts "Help build the community punk!"
+end
+
+def hero_run(opponent) do
+  hero[health] = hero[health] - 2
+  puts "You ran away from #{opponent[name]}, but lost 2 health points!"
 end
 
 # main
