@@ -12,8 +12,8 @@ baddies = [
   {"name" => "Nixon","health" => 10},
   ]
 
-max_health = 10
-hero = { "name" => "Dried Blood Hero", "health" => max_health }
+# max_health = 10
+hero = { "name" => "Dried Blood Hero", "health" => 10 }
 
 def hero_attack( hero, opponent )
 
@@ -33,7 +33,7 @@ def hero_attack( hero, opponent )
 	# Battle state report
 	puts hero["name"] + ": " + hero["health"].to_s + " health points."
 
-  if opponent["health"] < 0
+  if opponent["health"] <= 0
     baddie_death( hero, opponent )
   else
   	puts opponent["name"] + ": " + opponent["health"].to_s + " health points."
@@ -105,4 +105,8 @@ while (baddies.length > 0) && (hero["health"] > 0)
       end
     end
   end
+end
+
+if baddies.length == 0
+  "Glorious!!! You defeated all the baddies!"
 end
