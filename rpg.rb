@@ -20,3 +20,8 @@ def hero_death do
   puts "Sorry the blood has run dry. Better luck next time!"
   break
 end
+
+def hero_run(opponent) do
+  hero[health] = hero[health] - 2
+  puts "You ran away from #{opponent[name]}, but lost 2 health points!"
+end
