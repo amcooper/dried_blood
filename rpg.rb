@@ -7,18 +7,18 @@ baddies = [
   {"name" => "Bush", "health" => 10},
   {"name" => "Gore", "health" => 10},
   {"name" => "Koch", "health" => 10},
-  {"name" => "Anderson" ,"health" => 10},
-  {"name" => "Palin","health" => 10},
-  {"name" => "Nixon","health" => 10},
-  ]
+  {"name" => "Anderson", "health" => 10},
+  {"name" => "Palin", "health" => 10},
+  {"name" => "Nixon", "health" => 10}
+]
 
 # max_health = 10
 hero = { "name" => "Dried Blood Hero", "health" => 10 }
 
-def hero_attack( hero, opponent )
+def hero_attack( hero, baddies, index )
 
+  opponent = baddies[index]
 	chance = rand() # Roll the dice
-	# puts "Debug: chance = " + chance.to_s # Debugging line
   puts "You are on the attack!"
 
 	# 20% chance of missing. If chance is between 20% and 100%, it's a hit; weaken the opponent.
@@ -33,10 +33,8 @@ def hero_attack( hero, opponent )
 	# Battle state report
 	puts hero["name"] + ": " + hero["health"].to_s + " health points."
 
-  if opponent["health"] <= 0
-    baddie_death( hero, opponent )
-  else
-  	puts opponent["name"] + ": " + opponent["health"].to_s + " health points."
+  if opponent["health"] > 0
+      puts opponent["name"] + ": " + opponent["health"].to_s + " health points."
   end
 
 end
@@ -46,13 +44,12 @@ def baddie_attack( hero, opponent)
   chance = rand
   if chance > 0.4
     points = rand(1..3)
-    puts "The #{opponent["name"]} attacks you for #{opponent["health"]} points."
+    puts "The #{opponent["name"]} attacks you for #{points} points." # ***Important change***
     hero["health"] = hero["health"] - points
     puts hero["name"] + ": " + hero["health"].to_s + " health points."
     puts opponent["name"] + ": " + opponent["health"].to_s + " health points."
     if hero["health"] <= 0
       hero_death
-      # break
     end
   else
     puts "The #{opponent["name"]} tried to attack you but misses!"
@@ -61,18 +58,13 @@ def baddie_attack( hero, opponent)
   end
 end
 
-def bury(baddies, index)
-  killed = baddies.delete_at(index)
-  puts baddies
-end
-
 def hero_death
   puts "Sorry the blood has run dry. Better luck next time!"
-  # break
 end
 
-def baddie_death( hero, opponent )
+def baddie_death( hero, baddies, index )
   puts "Help build the community punk!"
+  killed = baddies.delete_at(index)
   hero["health"] = 10
 end
 
@@ -86,28 +78,35 @@ puts "Enter Your Name, Warrior: "
   hero["name"] = gets.chomp
 puts "Welcome, " + hero["name"] + ". Let the battle be joined!"
 
+n = 0 # Initialize n to stabilize the test at the beginning of the while loop below.
+
 while (baddies.length > 0) && (hero["health"] > 0)
-  n = rand(0..(baddies.length-1)) # Choose a baddie.
-  puts
-  puts baddies[n]["name"] + " attacks! Do you want to fight? (y | n)"
-  isFighting = gets.chomp
-  if (isFighting === "n")
-    hero_run( hero, baddies[n] )
-  else # isFighting === "y"
-    while ( hero["health"] > 0 ) && ( baddies[n]["health"] > 0 )
-      hero_attack( hero, baddies[n])
-      sleep(1)
-      if ( hero["health"] > 0 ) && ( baddies[n]["health"] > 0 )
-        baddie_attack( hero, baddies[n])
-        sleep(0.5)
-        puts ". . . "
-        sleep(0.5)
-        puts
+
+  if baddies[n]["health"] <= 0
+    baddie_death( hero, baddies, n )
+  end
+
+  if baddies.length == 0 
+    puts "Glorious!!! You defeated all the baddies!"
+  else
+    n = rand(0..(baddies.length-1)) # Choose a baddie.
+    puts
+    puts baddies[n]["name"] + " attacks! Do you want to fight? (y | n)"
+    isFighting = gets.chomp
+    if (isFighting == "n")
+      hero_run( hero, baddies[n] )
+    else # isFighting == "y"
+      while ( hero["health"] > 0 ) && ( baddies[n]["health"] > 0 )
+        hero_attack( hero, baddies, n )
+        sleep(1)
+        if ( hero["health"] > 0 ) && ( baddies[n]["health"] > 0 )
+          baddie_attack( hero, baddies[n] )
+          sleep(0.5)
+          puts ". . . "
+          sleep(0.5)
+          puts
+        end
       end
     end
   end
-end
-
-if baddies.length == 0
-  "Glorious!!! You defeated all the baddies!"
 end
